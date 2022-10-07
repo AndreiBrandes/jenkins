@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages{
-        stage('Dev'){
+        stage('python job'){
             steps {
                 echo 'Hello World4'
             }
