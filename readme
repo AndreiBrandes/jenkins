@@ -1,1 +1,23 @@
-start
+Trigger a jenkins job by a github pull request
+Clone this repo and follow the steps
+
+Run the Jenkins server: 
+    1 - docker-compose up
+    2 - get the password from the console to login
+    3 - install recommanded plugins and create an admin user account
+
+Configure Jenkins and create a job:
+    1 - Install the plugin: "GitHub Pull Request Builder" 
+    2 - Create a new pipeline job
+    3 - Check and configure: General\Github with the HTTPS URL
+    4 - Build Triggers\GitHub Pull Request Builder  -  Use "Personal access tokens" from github as credentials (https://github.com/settings/tokens). Check "Use github hooks for build triggering" 
+    5 - Pipeline\Pipeline script from SCM 
+    6 - Branches to build\Branch specifier - ${sha1}
+    7 - Uncheck "lightweight checkout" 
+
+Configure Github webhook:
+    1 - https://github.com/AndreiBrandes/jenkins/settings/hooks 
+    2 - URL: http://ip:8080/ghprbhook/
+    3 - Content type: Json
+    4 - Select events: "Pull requests" 
+    5 - Check the active box and watch the icon turn green after applying
