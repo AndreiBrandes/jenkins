@@ -2,7 +2,7 @@ pipeline {
     environment {
         registry = "oholic/aurora"
         registryCredential = 'dockerhub'
-        DockerImage = ''
+        dockerImage = ''
     }
 agent any
     stages {
