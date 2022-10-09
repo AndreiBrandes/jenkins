@@ -1,9 +1,4 @@
 pipeline {
-    environment {
-        registry = "oholic/aurora"
-        registryCredential = 'dockerhub'
-        dockerImage = ''
-    }
 agent any
     stages {
         stage('Cloning our Git') {
@@ -27,7 +22,8 @@ agent any
             }
         }
     }
-    
+
+
     stage('Cleaning up') {
         steps{
             sh "docker rmi $registry:$BUILD_NUMBER"
