@@ -7,7 +7,7 @@ Run the Jenkins server:
     3 - install recommanded plugins and create an admin user account
 
 Configure Jenkins and create a job:
-    1 - Install the plugin: "GitHub Pull Request Builder" 
+    1 - Install the plugin: "GitHub Pull Request Builder" & "Docker pipelines"
     2 - Create a new pipeline job
     3 - Check and configure: General\Github with the HTTPS URL
     4 - Build Triggers\GitHub Pull Request Builder  -  Use "Personal access tokens" from github as credentials (https://github.com/settings/tokens). Check "Use github hooks for build triggering" 

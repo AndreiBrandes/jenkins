@@ -8,25 +8,21 @@ agent any
             }
         }
     stage('Build docker image') {
-            steps {  
-                sh 'docker build -t oholic/aurora:$BUILD_NUMBER .'
-            }
+            script {  
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"            }
         }
     stage('login to dockerhub') {
-            steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u oholic --password-stdin'
+            script {
+                docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+    }
             }
         }
-    stage('push image') {
-            steps{
-                sh 'docker push oholic/aurora:$BUILD_NUMBER'
-            }
-        }
-
     stage('Cleaning up') {
         steps{
             sh "docker rmi $registry:$BUILD_NUMBER"
         }
+    }
     }
     }
 }
