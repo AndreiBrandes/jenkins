@@ -12,8 +12,9 @@ Configure Jenkins and create a job:
     3 - Check and configure: General\Github with the HTTPS URL
     4 - Build Triggers\GitHub Pull Request Builder  -  Use "Personal access tokens" from github as credentials (https://github.com/settings/tokens). Check "Use github hooks for build triggering" 
     5 - Pipeline\Pipeline script from SCM 
-    6 - Branches to build\Branch specifier - ${sha1}
-    7 - Uncheck "lightweight checkout" 
+    6 - Refspec: +refs/pull/*:refs/remotes/origin/pr/*
+    7 - Branches to build\Branch specifier - ${sha1}
+    8 - Uncheck "lightweight checkout" 
 
 Configure Github webhook:
     1 - https://github.com/AndreiBrandes/jenkins/settings/hooks 
