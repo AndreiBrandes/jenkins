@@ -2,7 +2,7 @@ pipeline {
     environment {
     registry = "oholic/aurura"
     registryCredential = 'dockerhub'
-    dockerImage = ''
+    dockerimage = ''
   }
 agent any
     stages {
@@ -16,11 +16,20 @@ agent any
         {
             steps{
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerimage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
 
         }
+        stage('Deploy our image') {
+        steps{
+            script {
+                docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+    }
+            }
+        }
+    }
 
     }
     }
