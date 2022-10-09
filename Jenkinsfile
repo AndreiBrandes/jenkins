@@ -27,6 +27,7 @@ agent any
             }
         }
     }
+
     
     stage('Cleaning up') {
         steps{
