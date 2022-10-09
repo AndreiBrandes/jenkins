@@ -19,7 +19,6 @@ agent any
                     dockerimage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
-
         }
         stage('Deploy our image') {
         steps{
