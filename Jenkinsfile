@@ -1,34 +1,34 @@
 pipeline {
-    agent any 
-    environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    }
-    stages { 
-        stage('SCM Checkout') {
-            steps{
-            git 'https://github.com/AndreiBrandes/jenkins'
-            }
-        }
+agent any
+    stages {
+        stage('Cloning our Git') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '29dd1f8b-c632-4c10-818e-967f7053453f', url: 'https://github.com/AndreiBrandes/jenkins']]])
 
-        stage('Build docker image') {
-            steps {  
-                sh 'docker build -t oholic/aurura:$BUILD_NUMBER .'
             }
         }
-        stage('login to dockerhub') {
+    stage('Building our image') {
             steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+    }
+    stage('Deploy our image') {
+        steps{
+            script {
+                docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+    }
             }
         }
-        stage('push image') {
-            steps{
-                sh 'docker push valaxy/nodeapp:$BUILD_NUMBER'
-            }
+    }
+
+
+    stage('Cleaning up') {
+        steps{
+            sh "docker rmi $registry:$BUILD_NUMBER"
         }
-}
-post {
-        always {
-            sh 'docker logout'
-        }
+    }
     }
 }
