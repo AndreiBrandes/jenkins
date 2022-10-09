@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+    registry = "oholic/aurura"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
 agent any
     stages {
         stage('Cloning our Git') {
