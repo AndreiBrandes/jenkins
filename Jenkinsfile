@@ -1,13 +1,11 @@
 pipeline {
 agent any
-stages {
-        
-    stage('Building our image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
+stages {    
+    stages {
+        stage('Cloning our Git') {
+            steps {
+                git 'https://github.com/AndreiBrandes/jenkins.git'
             }
-    }
+        }
 }
 }
